@@ -3,9 +3,105 @@
 <head>
 	<title>Excel App</title>
 	
-	<script src="https://code.datagridxl.com/datagridxl2.js"></script>
+<script src="https://code.datagridxl.com/datagridxl2.js"></script>
 </head>
 <body>
+<!-- amCharts (chart plugin) -->
+<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+<script src="https://www.amcharts.com/lib/3/serial.js"></script>
+<script>
+var my_data = [{
+  "empresa": "Marcopolo",
+  "ano": 2021,
+  "vendas": 800
+}, {
+  "setor": "Autopeças",
+  "ano": 2021,
+  "vendas": 650
+}, {
+  "empresa": "Exterior",
+  "ano": 2021,
+  "vendas": 600
+}, {
+  "empresa": "Outros",
+  "ano": 2021,
+  "vendas": 356
+}, {
+];
+
+var grid;
+var chart;
+
+createGrid();
+createChart();
+
+function createGrid(){
+
+  grid = new DataGridXL("grid", {
+    data: my_data,
+    allowDeleteCols: false,
+    allowInsertCols: false,
+    allowFillCells: true,
+    fillCellsDirection: "y",
+    expandSheetOnPaste: false,
+    allowFreezeCols: false,
+    allowFreezeRows: false,
+    allowMoveCols: false
+  });
+
+  function updateChartData(){
+
+    var gridInstance = this;
+
+    chart.dataProvider = gridInstance.getData();
+    chart.validateData();
+    chart.animateAgain();
+
+  }
+
+  grid.events.on("setcellvalues", updateChartData);
+  grid.events.on("moverows", updateChartData);
+  grid.events.on("sort", updateChartData);
+  grid.events.on("deleterows", updateChartData);
+  grid.events.on("insertrows", updateChartData);
+
+}
+
+function createChart(){
+
+  chart = AmCharts.makeChart( "Gráfico", {
+    "type": "serial",
+    "theme": "none",
+    "dataProvider": my_data,
+    "categoryField": "Desempenho",
+    "startDuration": 1,
+    "graphs": [ {
+      "balloonText": "[[category]]: [[value]]",
+      "fillAlphas": 0.8,
+      "lineAlpha": 0.2,
+      "type": "column",
+      "valueField": "Vendas",
+      "fillColors": "pink",
+      "lineColor": "pink"
+    }, {
+      "balloonText": "[[category]]: [[value]]",
+      "fillAlphas": 0.8,
+      "lineAlpha": 0.2,
+      "type": "column",
+      "valueField": "Produtos",
+      "fillColors": "purple",
+      "lineColor": "purple"
+    } ],
+    "chartCursor": {
+      "categoryBalloonEnabled": false,
+      "cursorAlpha": 0,
+      "zoomable": false
+    }
+  } );
+
+}
+
+</script>
 <script src="https://code.datagridxl.com/datagridxl2.js"></script>
 <style>
 #grid {
@@ -180,7 +276,7 @@ var grid = new DataGridXL("grid", {
   data: DataGridXL.createDummyData(2000,500)
 });
 </script>
-	<div id="grid" style="width:100%;height:400px;"></div>
+<div id="grid" style="width:100%;height:400px;"></div>
 <style>
 #grid, #chart {
   height: 300px;
@@ -191,102 +287,6 @@ var grid = new DataGridXL("grid", {
 <div id="grid"></div>
 
 <script src="https://code.datagridxl.com/datagridxl2.js"></script>
-<!-- amCharts (chart plugin) -->
-<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
-<script src="https://www.amcharts.com/lib/3/serial.js"></script>
-<script>
-var my_data = [{
-  "empresa": "Marcopolo",
-  "ano": 2021,
-  "vendas": 800
-}, {
-  "setor": "Autopeças",
-  "ano": 2021,
-  "vendas": 650
-}, {
-  "empresa": "Exterior",
-  "ano": 2021,
-  "vendas": 600
-}, {
-  "empresa": "Outros",
-  "ano": 2021,
-  "vendas": 356
-}, {
-];
-
-var grid;
-var chart;
-
-createGrid();
-createChart();
-
-function createGrid(){
-
-  grid = new DataGridXL("grid", {
-    data: my_data,
-    allowDeleteCols: false,
-    allowInsertCols: false,
-    allowFillCells: true,
-    fillCellsDirection: "y",
-    expandSheetOnPaste: false,
-    allowFreezeCols: false,
-    allowFreezeRows: false,
-    allowMoveCols: false
-  });
-
-  function updateChartData(){
-
-    var gridInstance = this;
-
-    chart.dataProvider = gridInstance.getData();
-    chart.validateData();
-    chart.animateAgain();
-
-  }
-
-  grid.events.on("setcellvalues", updateChartData);
-  grid.events.on("moverows", updateChartData);
-  grid.events.on("sort", updateChartData);
-  grid.events.on("deleterows", updateChartData);
-  grid.events.on("insertrows", updateChartData);
-
-}
-
-function createChart(){
-
-  chart = AmCharts.makeChart( "Gráfico", {
-    "type": "serial",
-    "theme": "none",
-    "dataProvider": my_data,
-    "categoryField": "Desempenho",
-    "startDuration": 1,
-    "graphs": [ {
-      "balloonText": "[[category]]: [[value]]",
-      "fillAlphas": 0.8,
-      "lineAlpha": 0.2,
-      "type": "column",
-      "valueField": "Vendas",
-      "fillColors": "pink",
-      "lineColor": "pink"
-    }, {
-      "balloonText": "[[category]]: [[value]]",
-      "fillAlphas": 0.8,
-      "lineAlpha": 0.2,
-      "type": "column",
-      "valueField": "Produtos",
-      "fillColors": "purple",
-      "lineColor": "purple"
-    } ],
-    "chartCursor": {
-      "categoryBalloonEnabled": false,
-      "cursorAlpha": 0,
-      "zoomable": false
-    }
-  } );
-
-}
-
-</script>
 <style>
 #grid {
   height: 400px;
