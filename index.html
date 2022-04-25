@@ -271,5 +271,64 @@ document.getElementById("button-save").onclick = function(){
   grid.downloadDataAsCSV();
 }
 </script>
+<style>
+#grid {
+  height: 400px;
+}
+
+#toolbar {
+  background: var(--tableodd);
+  margin-bottom: 12px;
+  padding: 8px;
+
+  display: flex;
+  justify-content: space-between;
+}
+</style>
+
+<div id="toolbar" class="dgxl-app">
+  <div>
+    <input type="file" id="json-file" name="files-json" class="custom-file-input" accept=".json"><label for="json-file">Browse…</label>
+  </div>
+  <button class="button" id="button-save">Save</button>
+</div>
+
+<div id="grid"></div>
+
+<script src="https://code.datagridxl.com/datagridxl2.js"></script>
+<script>
+var jsonFile = document.getElementById("json-file");
+
+// create empty grid
+var grid = new DataGridXL("grid", {
+  data: DataGridXL.createEmptyData(20,20)
+});
+
+jsonFile.onchange = function(e){
+
+    var reader = new FileReader();
+    reader.onload = onReaderLoad;
+    reader.readAsText(e.target.files[0]);
+
+}
+
+function onReaderLoad(e){
+
+    var obj = JSON.parse(e.target.result);
+
+    grid = new DataGridXL("grid", {
+        data: obj
+    });
+
+    // grid = new DataGridXL("grid", {
+    //  data: obj
+    // });
+
+}
+
+document.getElementById("button-save").onclick = function(){
+  grid.downloadDataAsJSON();
+}
+</script>
 </body>
 </html>
