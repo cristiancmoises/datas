@@ -7,7 +7,7 @@
 <body>
 <style>
 #grid {
-  height: 400px;
+  height: 900px;
 }
 </style>
 
@@ -112,7 +112,7 @@ var grid = new DataGridXL("grid", {
 </script>
 <style>
 #grid {
-  height: 800px;
+  height: 900px;
 }
 
 #toolbar {
@@ -170,7 +170,7 @@ document.getElementById("button-save").onclick = function(){
   grid.downloadDataAsCSV();
 }
 </script>
-	<div id="grid" style="width:100%;height:800px;"></div>
+	<div id="grid" style="width:100%;height:900px;"></div>
 	<script>
 		var options = {
 			data: [
@@ -181,116 +181,5 @@ document.getElementById("button-save").onclick = function(){
 		};
 		var grid = new DataGridXL("grid", options);
 	</script>
-<style>
-#grid, #chart {
-  height: 300px;
-}
-</style>
-
-<div id="chart"></div>
-<div id="grid"></div>
-<!-- amCharts (chart plugin) -->
-<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
-<script src="https://www.amcharts.com/lib/3/serial.js"></script>
-<script>
-var my_data = [{
-  "country": "USA",
-  "visits": 2025,
-  "vendas": 800
-}, {
-  "country": "China",
-  "visits": 1882,
-  "vendas": 6060
-}, {
-  "country": "Japan",
-  "visits": 1809,
-  "vendas": 5080
-}, {
-  "country": "Germany",
-  "visits": 1422,
-  "vendas": 4500
-}, {
-  "country": "India",
-  "visits": 1522,
-  "vendas": 5870
-}, {
-  "country": "Netherlands",
-  "visits": 1542,
-  "vendas": 8860
-}];
-
-var grid;
-var chart;
-
-createGrid();
-createChart();
-
-function createGrid(){
-
-  grid = new DataGridXL("grid", {
-    data: my_data,
-    allowDeleteCols: false,
-    allowInsertCols: false,
-    allowFillCells: true,
-    fillCellsDirection: "y",
-    expandSheetOnPaste: false,
-    allowFreezeCols: false,
-    allowFreezeRows: false,
-    allowMoveCols: false
-  });
-
-  function updateChartData(){
-
-    var gridInstance = this;
-
-    chart.dataProvider = gridInstance.getData();
-    chart.validateData();
-    chart.animateAgain();
-
-  }
-
-  grid.events.on("setcellvalues", updateChartData);
-  grid.events.on("moverows", updateChartData);
-  grid.events.on("sort", updateChartData);
-  grid.events.on("deleterows", updateChartData);
-  grid.events.on("insertrows", updateChartData);
-
-}
-
-function createChart(){
-
-  chart = AmCharts.makeChart( "chart", {
-    "type": "serial",
-    "theme": "none",
-    "dataProvider": my_data,
-    "categoryField": "country",
-    "startDuration": 1,
-    "graphs": [ {
-      "balloonText": "[[category]]: [[value]]",
-      "fillAlphas": 0.8,
-      "lineAlpha": 0.2,
-      "type": "column",
-      "valueField": "visits",
-      "fillColors": "pink",
-      "lineColor": "pink"
-    }, {
-      "balloonText": "[[category]]: [[value]]",
-      "fillAlphas": 0.8,
-      "lineAlpha": 0.2,
-      "type": "column",
-      "valueField": "votes",
-      "fillColors": "purple",
-      "lineColor": "purple"
-    } ],
-    "chartCursor": {
-      "categoryBalloonEnabled": false,
-      "cursorAlpha": 0,
-      "zoomable": false
-    }
-  } );
-
-}
-
-</script>
 </body>
 </html>
