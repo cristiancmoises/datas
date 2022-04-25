@@ -3,7 +3,15 @@
 <head>
 	<title>Excel App</title>
 </head>
-<body>
+<style>
+#grid {
+  height: 400px;
+}
+</style>
+
+<div id="grid"></div>
+
+<script src="https://code.datagridxl.com/datagridxl2.js"></script>
 <script>
 var dark_theme = {
 
@@ -102,6 +110,7 @@ var grid = new DataGridXL("grid", {
   theme: dark_theme
 });
 </script>
+<body>
 <style>
 #grid {
   height: 400px;
