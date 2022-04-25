@@ -8,7 +8,7 @@
   height: 400px;
 }
 </style>
-
+	
 <div id="grid"></div>
 
 <script src="https://code.datagridxl.com/datagridxl2.js"></script>
@@ -123,102 +123,6 @@ var grid = new DataGridXL("grid", {
 <script>
 var grid = new DataGridXL("grid");
 </script>
-<!-- amCharts (chart plugin) -->
-<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
-<script src="https://www.amcharts.com/lib/3/serial.js"></script>
-<script>
-var my_data = [{
-  "empresa": "Marcopolo",
-  "ano": 2021,
-  "vendas": 800
-}, {
-  "setor": "Autopeças",
-  "ano": 2021,
-  "vendas": 650
-}, {
-  "empresa": "Exterior",
-  "ano": 2021,
-  "vendas": 600
-}, {
-  "empresa": "Outros",
-  "ano": 2021,
-  "vendas": 356
-}, {
-];
-
-var grid;
-var chart;
-
-createGrid();
-createChart();
-
-function createGrid(){
-
-  grid = new DataGridXL("grid", {
-    data: my_data,
-    allowDeleteCols: false,
-    allowInsertCols: false,
-    allowFillCells: true,
-    fillCellsDirection: "y",
-    expandSheetOnPaste: false,
-    allowFreezeCols: false,
-    allowFreezeRows: false,
-    allowMoveCols: false
-  });
-
-  function updateChartData(){
-
-    var gridInstance = this;
-
-    chart.dataProvider = gridInstance.getData();
-    chart.validateData();
-    chart.animateAgain();
-
-  }
-
-  grid.events.on("setcellvalues", updateChartData);
-  grid.events.on("moverows", updateChartData);
-  grid.events.on("sort", updateChartData);
-  grid.events.on("deleterows", updateChartData);
-  grid.events.on("insertrows", updateChartData);
-
-}
-
-function createChart(){
-
-  chart = AmCharts.makeChart( "Gráfico", {
-    "type": "serial",
-    "theme": "none",
-    "dataProvider": my_data,
-    "categoryField": "Desempenho",
-    "startDuration": 1,
-    "graphs": [ {
-      "balloonText": "[[category]]: [[value]]",
-      "fillAlphas": 0.8,
-      "lineAlpha": 0.2,
-      "type": "column",
-      "valueField": "Vendas",
-      "fillColors": "pink",
-      "lineColor": "pink"
-    }, {
-      "balloonText": "[[category]]: [[value]]",
-      "fillAlphas": 0.8,
-      "lineAlpha": 0.2,
-      "type": "column",
-      "valueField": "Produtos",
-      "fillColors": "purple",
-      "lineColor": "purple"
-    } ],
-    "chartCursor": {
-      "categoryBalloonEnabled": false,
-      "cursorAlpha": 0,
-      "zoomable": false
-    }
-  } );
-
-}
-
-</script>
 <script src="https://code.datagridxl.com/datagridxl2.js"></script>
 <style>
 #grid {
@@ -294,50 +198,120 @@ document.getElementById("button-save").onclick = function(){
   justify-content: space-between;
 }
 </style>
+	
+<style>
+#grid, #chart {
+  height: 300px;
+}
+</style>
 
-<div id="toolbar" class="dgxl-app">
-  <div>
-    <input type="file" id="json-file" name="files-json" class="custom-file-input" accept=".json"><label for="json-file">Browse…</label>
-  </div>
-  <button class="button" id="button-save">Save</button>
-</div>
-
+<div id="chart"></div>
 <div id="grid"></div>
 
 <script src="https://code.datagridxl.com/datagridxl2.js"></script>
+<!-- amCharts (chart plugin) -->
+<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+<script src="https://www.amcharts.com/lib/3/serial.js"></script>
 <script>
-var jsonFile = document.getElementById("json-file");
+var my_data = [{
+  "country": "USA",
+  "visits": 2025,
+  "votes": 400
+}, {
+  "country": "China",
+  "visits": 1882,
+  "votes": 400
+}, {
+  "country": "Japan",
+  "visits": 1809,
+  "votes": 400
+}, {
+  "country": "Germany",
+  "visits": 1422,
+  "votes": 400
+}, {
+  "country": "India",
+  "visits": 1522,
+  "votes": 500
+}, {
+  "country": "Netherlands",
+  "visits": 1542,
+  "votes": 500
+}];
 
-// create empty grid
-var grid = new DataGridXL("grid", {
-  data: DataGridXL.createEmptyData(20,20)
-});
+var grid;
+var chart;
 
-jsonFile.onchange = function(e){
+createGrid();
+createChart();
 
-    var reader = new FileReader();
-    reader.onload = onReaderLoad;
-    reader.readAsText(e.target.files[0]);
+function createGrid(){
+
+  grid = new DataGridXL("grid", {
+    data: my_data,
+    allowDeleteCols: false,
+    allowInsertCols: false,
+    allowFillCells: true,
+    fillCellsDirection: "y",
+    expandSheetOnPaste: false,
+    allowFreezeCols: false,
+    allowFreezeRows: false,
+    allowMoveCols: false
+  });
+
+  function updateChartData(){
+
+    var gridInstance = this;
+
+    chart.dataProvider = gridInstance.getData();
+    chart.validateData();
+    chart.animateAgain();
+
+  }
+
+  grid.events.on("setcellvalues", updateChartData);
+  grid.events.on("moverows", updateChartData);
+  grid.events.on("sort", updateChartData);
+  grid.events.on("deleterows", updateChartData);
+  grid.events.on("insertrows", updateChartData);
 
 }
 
-function onReaderLoad(e){
+function createChart(){
 
-    var obj = JSON.parse(e.target.result);
-
-    grid = new DataGridXL("grid", {
-        data: obj
-    });
-
-    // grid = new DataGridXL("grid", {
-    //  data: obj
-    // });
+  chart = AmCharts.makeChart( "chart", {
+    "type": "serial",
+    "theme": "none",
+    "dataProvider": my_data,
+    "categoryField": "country",
+    "startDuration": 1,
+    "graphs": [ {
+      "balloonText": "[[category]]: [[value]]",
+      "fillAlphas": 0.8,
+      "lineAlpha": 0.2,
+      "type": "column",
+      "valueField": "visits",
+      "fillColors": "pink",
+      "lineColor": "pink"
+    }, {
+      "balloonText": "[[category]]: [[value]]",
+      "fillAlphas": 0.8,
+      "lineAlpha": 0.2,
+      "type": "column",
+      "valueField": "votes",
+      "fillColors": "purple",
+      "lineColor": "purple"
+    } ],
+    "chartCursor": {
+      "categoryBalloonEnabled": false,
+      "cursorAlpha": 0,
+      "zoomable": false
+    }
+  } );
 
 }
 
-document.getElementById("button-save").onclick = function(){
-  grid.downloadDataAsJSON();
-}
-</script>
+</script>	
+	
 </body>
 </html>
