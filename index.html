@@ -2,8 +2,10 @@
 <html>
 <head>
 	<title>Autotravi App</title>
+	<script src="https://code.datagridxl.com/datagridxl2.js"></script>
 </head>
 <body>
+
 
 <style>
 #grid {
@@ -22,10 +24,10 @@
 
 <div id="toolbar" class="dgxl-app">
   <div>
-    <input type="file" id="csv-file" name="files-csv" class="custom-file-input" accept=".csv"><label for="csv-file">Procurar…</label>
+    <input type="file" id="csv-file" name="files-csv" class="custom-file-input" accept=".csv"><label for="csv-file">Browse…</label>
   </div>
   <div>
-    <button class="button" id="button-save">Salvar</button>
+    <button class="button" id="button-save">Save</button>
   </div>
 </div>
 
@@ -65,9 +67,14 @@ document.getElementById("button-save").onclick = function(){
   grid.downloadDataAsCSV();
 }
 </script>
+
+
 	
 	
-<style>
+	
+	
+	
+	<style>
 #grid {
   height: 400px;
 }
@@ -174,18 +181,24 @@ var grid = new DataGridXL("grid", {
   theme: dark_theme
 });
 </script>
-<style>
-#grid {
-  height: 400px;
-}
-</style>
 
-<div id="grid"></div>
+	
+	
+	
+	<div id="grid" style="width:100%;height:400px;"></div>
+	<script>
+		var options = {
+			data: [
+				[1, 2, 3],
+				[4, 5, 6],
+				[7, 8, 9]
+			]
+		};
+		var grid = new DataGridXL("grid", options);
+	</script>
 
-<script src="https://code.datagridxl.com/datagridxl2.js"></script>
-<script>
-var grid = new DataGridXL("grid");
-</script>
+	
+	
 
 <style>
 #grid, #chart {
@@ -300,5 +313,13 @@ function createChart(){
 }
 
 </script>
+
+	
+	
+	
+	
+	
+	
+	
 </body>
 </html>
